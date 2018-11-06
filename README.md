@@ -2,7 +2,7 @@
 
 ### 说明
 
-  基于 **[sowft](https://github.com/swoft-cloud/swoft)** 的 `socket` 组件，支持 `tcp/udp` 多端口监听，详细内容参考[swoole wiki](https://wiki.swoole.com/wiki/page/161.html)。
+  基于 **[swoft](https://github.com/swoft-cloud/swoft)** 的 `socket` 组件，支持 `tcp/udp` 多端口监听，详细内容参考[swoole wiki](https://wiki.swoole.com/wiki/page/161.html)。
 
 
 ### 安装
@@ -18,9 +18,16 @@
 1. 在 `/project-to-path/config/properties/app` 中添加配置:
 
 ```php
+    // 配置启动扫描
+    'bootScan' => [
+        // code...
+        // 把 sockerListener 注解的目录添加到启动扫描
+        'App\Listener'
+    ],
+    // 指定扫描组件
     'components' => [
             'custom' => [
-                'Swoft\\Socket'
+                'Swoft\\Socket\\'
             ],
         ],
 ```
