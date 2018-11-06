@@ -1,0 +1,49 @@
+{
+    "name": "wp-breeder/swoft-socket",
+    "type": "library",
+    "license": "Apache-2.0",
+    "keywords": [
+        "php",
+        "swoole",
+        "swoft",
+        "db",
+        "model"
+    ],
+    "description": "socket component for swoft",
+    "authors": [
+        {
+            "name": "wp-breeder",
+            "email": "wp_breeder@163.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Swoft\\Socket\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SwoftTest\\Socket\\": "tests"
+        }
+    },
+    "require": {
+        "php": ">=7.0",
+        "swoft/framework": "^1.0.24",
+        "swoft/console": "^1.0"
+    },
+    "require-dev": {
+        "swoft/swoole-ide-helper": "dev-master",
+        "phpunit/phpunit": "^5.7",
+        "friendsofphp/php-cs-fixer": "^2.10"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.laravel-china.org"
+        }
+    ],
+    "scripts": {
+        "test": "./vendor/bin/phpunit -c phpunit.xml",
+        "cs-fix": "./vendor/bin/php-cs-fixer fix $1"
+    }
+}
