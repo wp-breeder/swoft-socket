@@ -18,6 +18,12 @@ class SocketListener
     private $event;
 
     /**
+     * server name
+     * @var string
+     */
+    private $name;
+
+    /**
      * AutoController constructor.
      *
      * @param array $values
@@ -25,11 +31,13 @@ class SocketListener
     public function __construct(array $values)
     {
         if (isset($values['value']) && isset($values['name'])) {
-            $this->event[$values['name']] = (array)$values['value'];
+            $this->event = (array)$values['value'];
+            $this->name = (string)$values['name'];
         }
 
         if (isset($values['event']) && isset($values['name'])) {
-            $this->event[$values['name']] = (array)$values['event'];
+            $this->event = (array)$values['event'];
+            $this->name = (string)$values['name'];
         }
     }
 
@@ -39,5 +47,13 @@ class SocketListener
     public function getEvent(): array
     {
         return $this->event ?: [];
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name ?: '';
     }
 }

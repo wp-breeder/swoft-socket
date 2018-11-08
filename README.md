@@ -50,7 +50,8 @@
                 'port' => env('SOCKET_TCP_PORT', 8010),
                 'mode' => env('SOCKET_TCP_MODE', SWOOLE_PROCESS),
                 'type' => env('SOCKET_TCP_TYPE', SWOOLE_SOCK_TCP),
-                //server 名称(用于区分不同server 设置不同的回调，如果重复，则会覆盖)
+                //server 名称,必须设置，如果未设置则不监听(用于区分不同server 设置不同的回调，如果重复，则会覆盖)
+                //如果是单独开启，第一个不设置name则会报错
                 'name' => 'tcp'
             ],
             [
@@ -82,7 +83,7 @@
      * )
 ```
 
-2. 单独开启，与 `rpc` 、 `http` 、 `ws` 一致。(如监听多个，默认第一配置为master server, 其他配置则单独监听指定端口)
+2. 单独开启，与 `rpc` 、 `http` 、 `ws` 一致。(若监听多个，默认第一个配置为master server, 其他配置单独监听指定端口)
 
 ```shell
     php bin/swoft socket:start
@@ -146,11 +147,7 @@ use Swoole\Server;
  * udp 监听 demo
  * Class PacketListener
  * @package SwoftTest\Socket\Testing\Listeners
- * @SocketListener({
- *      SwooleEvent::ON_PACKET
- * },
- *      name="udp"
- * )
+ * @SocketListener(event={SwooleEvent::ON_PACKET}, name="udp")
  */
 class PacketListener implements PacketInterface
 {

@@ -8,7 +8,7 @@ use Swoft\Socket\Bean\Annotation\SocketListener;
 use Swoft\Socket\Event\SwooleEvent;
 
 /**
- * Server listener
+ * Socket listener
  */
 class SocketListenerCollector implements CollectorInterface
 {
@@ -19,10 +19,10 @@ class SocketListenerCollector implements CollectorInterface
 
     /**
      * @param string $className
-     * @param object   $objectAnnotation
+     * @param object $objectAnnotation
      * @param string $propertyName
      * @param string $methodName
-     * @param null   $propertyValue
+     * @param null $propertyValue
      * @return void
      */
     public static function collect(string $className, $objectAnnotation = null, string $propertyName = '', string $methodName = '', $propertyValue = null)
@@ -30,12 +30,11 @@ class SocketListenerCollector implements CollectorInterface
         if ($objectAnnotation instanceof BeforeStart) {
             self::$listeners[SwooleEvent::ON_BEFORE_START][] = $className;
         } elseif ($objectAnnotation instanceof SocketListener) {
-            $socketEvents = $objectAnnotation->getEvent();
+            $events = $objectAnnotation->getEvent();
+            $serverName = $objectAnnotation->getName();
 
-            foreach ($socketEvents as $serverName => $events) {
-                foreach ($events as $event) {
-                    self::$listeners[$serverName][$event] = $className;
-                }
+            foreach ($events as $event) {
+                self::$listeners[$serverName][$event] = $className;
             }
         }
     }

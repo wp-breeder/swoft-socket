@@ -16,11 +16,7 @@ use Swoole\Server;
 /**
  * Class PacketListener
  * @package SwoftTest\Socket\Testing\Listeners
- * @SocketListener({
- *      SwooleEvent::ON_PACKET
- * },
- *      name="udp"
- * )
+ * @SocketListener(event={SwooleEvent::ON_PACKET}, name="udp")
  */
 class PacketListener implements PacketInterface
 {
