@@ -47,7 +47,7 @@ class BeforeStartEventListener implements BeforeStartInterface
         $handler = $server->getServer();
         // listen port and set callback
         foreach ($socketSettings as $socketSetting) {
-            $swooleEvents = SocketServer::getSwooleEvents($socketSetting['name']);
+            $swooleEvents = SocketServer::getSocketEvents($socketSetting['name']);
             if (!empty($swooleEvents)) {
                 $port = $handler->addlistener(
                     $socketSetting['host'],

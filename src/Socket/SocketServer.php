@@ -3,6 +3,7 @@
 namespace Swoft\Socket\Socket;
 
 use Swoft\App;
+use Swoft\Bean\Collector\SwooleListenerCollector;
 use Swoft\Bootstrap\Server\AbstractServer;
 use Swoft\Socket\Bean\Collector\SocketListenerCollector;
 use Swoft\Socket\Event\SwooleEvent;
@@ -50,8 +51,9 @@ class SocketServer extends AbstractServer
         $this->server->on(SwooleEvent::ON_WORKER_START, [$this, 'onWorkerStart']);
         $this->server->on(SwooleEvent::ON_MANAGER_START, [$this, 'onManagerStart']);
         $this->server->on(SwooleEvent::ON_PIPE_MESSAGE, [$this, 'onPipeMessage']);
-        $swooleEvents = $this->getSwooleEvents($serverName);
-        $this->registerSocketSwooleEvents($this->server, $swooleEvents);
+        $socketEvents = self::getSocketEvents($serverName);
+        $swooleEvents = $this->getSwooleEvents();
+        $this->registerSocketSwooleEvents($this->server, \array_merge($swooleEvents, $socketEvents));
         // before start
         $this->beforeServerStart();
         $this->server->start();
@@ -103,11 +105,24 @@ class SocketServer extends AbstractServer
      * @param string $serverName
      * @return array
      */
-    public static function getSwooleEvents(string $serverName): array
+    public static function getSocketEvents(string $serverName): array
     {
         $socketListeners = SocketListenerCollector::getCollector();
-        $socketListener =  $socketListeners[$serverName] ?? [];
+        $socketListener = $socketListeners[$serverName] ?? [];
 
         return $socketListener;
+    }
+
+    /**
+     * get swoole listener events
+     * @return array
+     */
+    private function getSwooleEvents():array
+    {
+
+        $swooleListeners = SwooleListenerCollector::getCollector();
+        $portEvents = $swooleListeners[SwooleEvent::TYPE_PORT][0] ?? [];
+        $serverEvents = $swooleListeners[SwooleEvent::TYPE_SERVER] ?? [];
+        return \array_merge($portEvents, $serverEvents);
     }
 }

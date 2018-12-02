@@ -6,8 +6,9 @@
         "php",
         "swoole",
         "swoft",
-        "db",
-        "model"
+        "udp",
+        "tcp",
+        "socket"
     ],
     "description": "socket component for swoft",
     "authors": [
