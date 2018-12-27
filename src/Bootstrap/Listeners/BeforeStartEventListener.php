@@ -55,7 +55,7 @@ class BeforeStartEventListener implements BeforeStartInterface
                     $socketSetting['type']
                 );
                 $this->setServerList($socketSetting);
-                $listenSetting = SocketServer::getListenSocketSetting($socketSettings);
+                $listenSetting = SocketServer::getListenSocketSetting($socketSetting);
                 $setting = \array_merge($server->setting, $listenSetting);
                 $port->set($setting);
                 SocketServer::registerSocketSwooleEvents($port, $swooleEvents);
